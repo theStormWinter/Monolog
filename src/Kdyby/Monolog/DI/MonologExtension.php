@@ -20,6 +20,10 @@ use Tracy\Debugger;
 
 
 
+if (!class_exists('Tracy\Debugger')) {
+	class_alias('Nette\Diagnostics\Debugger', 'Tracy\Debugger');
+}
+
 if (!class_exists('Nette\DI\CompilerExtension')) {
 	class_alias('Nette\Config\CompilerExtension', 'Nette\DI\CompilerExtension');
 	class_alias('Nette\Config\Compiler', 'Nette\DI\Compiler');
@@ -136,10 +140,7 @@ class MonologExtension extends CompilerExtension
 		if ($config['hookToTracy'] === TRUE) {
 			$initialize = $class->methods['initialize'];
 
-			if (method_exists('Tracy\Debugger', 'setLogger')) {
-				$code = '\Tracy\Debugger::setLogger($this->getService(?));';
-
-			} elseif (method_exists('Nette\Diagnostics\Debugger', 'setLogger')) {
+			if (method_exists('Nette\Diagnostics\Debugger', 'setLogger')) {
 				$code = '\Nette\Diagnostics\Debugger::setLogger($this->getService(?));';
 
 			} else {
