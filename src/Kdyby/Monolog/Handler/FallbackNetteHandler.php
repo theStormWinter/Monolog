@@ -29,6 +29,9 @@ if (!class_exists('Tracy\Logger')) {
 }
 
 /**
+ * If you have no custom handlers that will write and/or send your messages somewhere,
+ * this one will just write them to the log/ directory, just like the default Tracy logger does.
+ *
  * @author Elan Ruusamäe <glen@delfi.ee>
  * @author Filip Procházka <filip@prochazka.su>
  */

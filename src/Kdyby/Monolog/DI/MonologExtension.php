@@ -32,6 +32,8 @@ if (isset(Nette\Loaders\NetteLoader::getInstance()->renamed['Nette\Configurator'
 }
 
 /**
+ * Integrates the Monolog seamlessly into your Nette Framework application.
+ *
  * @author Martin Bažík <martin@bazo.sk>
  * @author Filip Procházka <filip@prochazka.su>
  */
