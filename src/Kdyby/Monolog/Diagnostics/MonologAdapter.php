@@ -51,8 +51,10 @@ class MonologAdapter extends Logger
 
 	public function log($message, $priority = self::INFO)
 	{
-		$context = array();
 		$normalised = $message;
+		$context = array(
+			'at' => self::getSource(),
+		);
 
 		if (is_array($message)) {
 			if (count($message) >= 2 && preg_match('~\\[[\\d+ -]+\\]~i', $message[0])) {
@@ -81,6 +83,25 @@ class MonologAdapter extends Logger
 
 			default:
 				return $this->monolog->addRecord($level, $normalised, array('priority' => $priority) + $context);
+		}
+	}
+
+
+
+	/**
+	 * @internal
+	 * @author David Grudl
+	 * @see https://github.com/nette/tracy/blob/922630e689578f6daae185dba251cded831d9162/src/Tracy/Helpers.php#L146
+	 */
+	protected static function getSource()
+	{
+		if (isset($_SERVER['REQUEST_URI'])) {
+			return (!empty($_SERVER['HTTPS']) && strcasecmp($_SERVER['HTTPS'], 'off') ? 'https://' : 'http://')
+				. (isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '')
+				. $_SERVER['REQUEST_URI'];
+
+		} else {
+			return empty($_SERVER['argv']) ? 'CLI' : 'CLI: ' . implode(' ', $_SERVER['argv']);
 		}
 	}
 
