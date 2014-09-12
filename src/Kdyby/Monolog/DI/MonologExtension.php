@@ -152,7 +152,7 @@ class MonologExtension extends CompilerExtension
 		}
 
 		if (empty(Debugger::$logDirectory)) {
-			$initialize->addBody('\Nette\Diagnostics\Debugger::$logDirectory = ?', array($builder->expand('%logDir%')));
+			$initialize->addBody('\Nette\Diagnostics\Debugger::$logDirectory = ?;', array($builder->expand('%logDir%')));
 		}
 	}
 
