@@ -22,7 +22,7 @@
 		"monolog/monolog": "~1.9"
 	},
 	"require-dev": {
-		"nette/tester": "@dev",
+		"nette/tester": "~1.3@rc",
 		"jakub-onderka/php-parallel-lint": "~0.7"
 	},
 	"support": {
