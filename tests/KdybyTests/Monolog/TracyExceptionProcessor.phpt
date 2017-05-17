@@ -70,4 +70,4 @@ class TracyExceptionProcessorTest extends Tester\TestCase
 
 }
 
-\run(new TracyExceptionProcessorTest());
+(new TracyExceptionProcessorTest())->run();

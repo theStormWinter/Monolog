@@ -98,4 +98,4 @@ class PriorityProcessorTest extends Tester\TestCase
 
 }
 
-\run(new PriorityProcessorTest());
+(new PriorityProcessorTest())->run();

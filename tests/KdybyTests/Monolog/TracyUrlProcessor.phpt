@@ -42,4 +42,4 @@ class TracyUrlProcessorTest extends Tester\TestCase
 
 }
 
-\run(new TracyUrlProcessorTest());
+(new TracyUrlProcessorTest())->run();

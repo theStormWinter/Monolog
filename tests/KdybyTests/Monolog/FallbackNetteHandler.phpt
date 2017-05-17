@@ -171,4 +171,4 @@ class FallbackNetteHandlerTest extends Tester\TestCase
 
 }
 
-\run(new FallbackNetteHandlerTest());
+(new FallbackNetteHandlerTest())->run();

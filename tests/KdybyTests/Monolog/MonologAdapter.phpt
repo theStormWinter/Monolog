@@ -150,4 +150,4 @@ class MonologAdapterTest extends Tester\TestCase
 
 }
 
-\run(new MonologAdapterTest());
+(new MonologAdapterTest())->run();
