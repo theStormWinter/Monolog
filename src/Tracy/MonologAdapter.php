@@ -11,6 +11,7 @@
 namespace Kdyby\Monolog\Tracy;
 
 use Monolog\Logger as MonologLogger;
+use Throwable;
 use Tracy\Helpers;
 
 /**
@@ -60,7 +61,7 @@ class MonologAdapter extends \Tracy\Logger
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getExceptionFile($exception)
+	public function getExceptionFile(Throwable $exception): string
 	{
 		return $this->blueScreenRenderer->getExceptionFile($exception);
 	}
@@ -73,11 +74,11 @@ class MonologAdapter extends \Tracy\Logger
 			'at' => Helpers::getSource(),
 		];
 
-		if ($originalMessage instanceof \Throwable || $originalMessage instanceof \Exception) {
+		if ($originalMessage instanceof Throwable || $originalMessage instanceof \Exception) {
 			$context['exception'] = $originalMessage;
 		}
 
-		$exceptionFile = ($originalMessage instanceof \Throwable || $originalMessage instanceof \Exception)
+		$exceptionFile = ($originalMessage instanceof Throwable || $originalMessage instanceof \Exception)
 			? $this->getExceptionFile($originalMessage)
 			: NULL;
 
