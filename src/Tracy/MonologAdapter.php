@@ -10,18 +10,22 @@
 
 namespace Kdyby\Monolog\Tracy;
 
+use Exception;
+use Kdyby\StrictObjects\Scream;
 use Monolog\Logger as MonologLogger;
 use Throwable;
 use Tracy\Helpers;
+use Tracy\Logger;
+
 
 /**
  * Replaces the default Tracy logger,
  * which allows to preprocess all messages and pass then to Monolog for processing.
  */
-class MonologAdapter extends \Tracy\Logger
+class MonologAdapter extends Logger
 {
 
-	use \Kdyby\StrictObjects\Scream;
+	use Scream;
 
 	const ACCESS = 'access';
 
@@ -61,7 +65,7 @@ class MonologAdapter extends \Tracy\Logger
 	/**
 	 * {@inheritdoc}
 	 */
-	public function getExceptionFile(Throwable $exception): string
+	public function getExceptionFile(Throwable $exception, string $level = self::EXCEPTION): string
 	{
 		return $this->blueScreenRenderer->getExceptionFile($exception);
 	}
@@ -74,11 +78,11 @@ class MonologAdapter extends \Tracy\Logger
 			'at' => Helpers::getSource(),
 		];
 
-		if ($originalMessage instanceof Throwable || $originalMessage instanceof \Exception) {
+		if ($originalMessage instanceof Throwable || $originalMessage instanceof Exception) {
 			$context['exception'] = $originalMessage;
 		}
 
-		$exceptionFile = ($originalMessage instanceof Throwable || $originalMessage instanceof \Exception)
+		$exceptionFile = ($originalMessage instanceof Throwable || $originalMessage instanceof Exception)
 			? $this->getExceptionFile($originalMessage)
 			: NULL;
 
