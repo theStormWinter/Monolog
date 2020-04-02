@@ -16,7 +16,9 @@ use Kdyby\Monolog\Processor\TracyExceptionProcessor;
 use Kdyby\Monolog\Processor\TracyUrlProcessor;
 use Kdyby\Monolog\Tracy\BlueScreenRenderer;
 use Kdyby\Monolog\Tracy\MonologAdapter;
+use Kdyby\StrictObjects\MemberAccessException;
 use Kdyby\StrictObjects\Scream;
+use Kdyby\StrictObjects\Suggester;
 use Nette\Configurator;
 use Nette\DI\Compiler;
 use Nette\DI\CompilerExtension;
@@ -242,6 +244,20 @@ class MonologExtension extends CompilerExtension
         if (!@mkdir($logDir, 0777, true) && !is_dir($logDir)) {
             throw new RuntimeException(sprintf('Log dir %s cannot be created', $logDir));
         }
+    }
+
+    /**
+     * Is property defined?
+     *
+     * @param string $name property name
+     * @throws \Kdyby\StrictObjects\MemberAccessException
+     * @return bool
+     */
+    public function __isset($name): bool
+    {
+        $class = get_class($this);
+        $hint = Suggester::suggestProperty($class, $name);
+        throw new MemberAccessException("Cannot read an undeclared property $class::\$$name" . ($hint ? ", did you mean \$$hint?" : '.'));
     }
 
 }
